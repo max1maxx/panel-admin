@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useRef } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
 import { LIGHT_THEME } from "../../constants/themeConstants";
 import LogoBlue from "../../assets/images/logo_blue.svg";
@@ -18,29 +18,13 @@ import {
 import { Link } from "react-router-dom";
 import "./Sidebar.scss";
 import { SidebarContext } from "../../context/SidebarContext";
+import { useAuth } from "../../context/AuthContext";
 
 const Sidebar = () => {
   const { theme } = useContext(ThemeContext);
   const { isSidebarOpen, closeSidebar } = useContext(SidebarContext);
   const navbarRef = useRef(null);
-
-  // closing the navbar when clicked outside the sidebar area
-  const handleClickOutside = (event) => {
-    if (
-      navbarRef.current &&
-      !navbarRef.current.contains(event.target) &&
-      event.target.className !== "sidebar-oepn-btn"
-    ) {
-      closeSidebar();
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  const {logout} = useAuth();
 
   return (
     <nav
@@ -50,7 +34,8 @@ const Sidebar = () => {
       <div className="sidebar-top">
         <div className="sidebar-brand">
           <img src={theme === LIGHT_THEME ? LogoBlue : LogoWhite} alt="" />
-          <span className="sidebar-brand-text">tabernam.</span>
+          {/* <img src="https://power.net.ec/app/imagenes/proyecto/logo_powernet.svg" className="img-logo-menu"/> */}
+          <span className="sidebar-brand-text">powertesis</span>
         </div>
         <button className="sidebar-close-btn" onClick={closeSidebar}>
           <MdOutlineClose size={24} />
@@ -121,20 +106,22 @@ const Sidebar = () => {
         <div className="sidebar-menu sidebar-menu2">
           <ul className="menu-list">
             <li className="menu-item">
-              <Link to="/" className="menu-link">
+              <Link to="/config" className="menu-link">
                 <span className="menu-link-icon">
                   <MdOutlineSettings size={20} />
                 </span>
-                <span className="menu-link-text">Settings</span>
+                <span className="menu-link-text">Configuración</span>
               </Link>
             </li>
             <li className="menu-item">
-              <Link to="/" className="menu-link">
-                <span className="menu-link-icon">
-                  <MdOutlineLogout size={20} />
-                </span>
-                <span className="menu-link-text">Logout</span>
-              </Link>
+              <div className="menu-link" onClick={logout}>
+                <Link className="menu-link">
+                  <span className="menu-link-icon">
+                    <MdOutlineLogout size={20} />
+                  </span>
+                  <span className="menu-link-text">Cerrar sesión</span>
+                </Link>
+              </div>
             </li>
           </ul>
         </div>

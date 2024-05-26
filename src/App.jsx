@@ -7,7 +7,10 @@ import MoonIcon from "./assets/icons/moon.svg";
 import SunIcon from "./assets/icons/sun.svg";
 import BaseLayout from "./layout/BaseLayout";
 import { Dashboard, PageNotFound } from "./screens";
-
+import Login from "./screens/login/LoginScreen";
+import ConfigScreen from "./screens/config/ConfigScreen";
+import { AuthProvider } from "./context/AuthContext";
+import { ProtectedRoute } from "./routes";
 function App() {
   const { theme, toggleTheme } = useContext(ThemeContext);
 
@@ -21,12 +24,18 @@ function App() {
   }, [theme]);
 
   return (
-    <>
+    <AuthProvider>
       <Router>
         <Routes>
+          <Route path="/" element={<Login />} />
+          {/* <Route path="/login" element={<Login />} /> */}
           <Route element={<BaseLayout />}>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="*" element={<PageNotFound />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/config" element={<ConfigScreen />} />
+              <Route path="*" element={<PageNotFound />} />
+            </Route>
+
           </Route>
         </Routes>
 
@@ -41,7 +50,7 @@ function App() {
           />
         </button>
       </Router>
-    </>
+    </AuthProvider>
   );
 }
 
