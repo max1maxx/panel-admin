@@ -1,0 +1,20 @@
+.page-wrapper {
+    background-color: var(--background-color);
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  .area-top-title {
+    color: var(--text-color-inverted);
+  }
+
+  .button-login{
+    padding: "10px";
+    cursor: "pointer";
+    border: "1px solid black"
+  }
+
+  .form-signin{
+    max-width: 330px;
+    padding: 1rem;
+  }
