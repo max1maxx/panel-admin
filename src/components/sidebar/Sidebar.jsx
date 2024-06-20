@@ -58,11 +58,11 @@ const Sidebar = () => {
               </Link>
             </li>
             <li className="menu-item nav-item">
-              <Link to="/config" className={`menu-link ${isActive('/config')}`}>
+              <Link to="/dispositivos" className={`menu-link ${isActive('/dispositivos')}`}>
                 <span className="menu-link-icon">
                   <MdOutlineSettings size={20} />
                 </span>
-                <span className="menu-link-text">Configuración</span>
+                <span className="menu-link-text">Dispositivos</span>
               </Link>
             </li>
             {/* <li className="menu-item">

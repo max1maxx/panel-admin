@@ -3,12 +3,13 @@ import bcrypt from 'bcryptjs'
 import { createAccessToken } from '../libs/jwt.js'
 import { TOKEN_SECRET_KEY } from '../config.js'
 import jwt from 'jsonwebtoken'
+import axios from 'axios'
 
 export const register = async (req, res) => {
     const { email, username, password } = req.body
     try {
         const userFound = await User.findOne({ email })
-        if (userFound) return res.status(400).json({ message: ['A user with this email already exists'] })
+        if (userFound) return res.status(400).json({ message: ['Ya existe un usuario registrado con ese email'] })
         const passwordHash = await bcrypt.hash(password, 10)
         const newUser = new User({
             email,
@@ -37,13 +38,13 @@ export const login = async (req, res) => {
     const { email, password } = req.body
     try {
         const userFound = await User.findOne({ email })
-        if (!userFound) return res.status(400).json({ message: 'User not found' });
+        if (!userFound) return res.status(400).json({ message: 'Usuario no encontrado' });
         const isMatch = await bcrypt.compare(password, userFound.password)
-        if (!isMatch) return res.status(400).json({ message: 'User or Password incorrect' });
+        if (!isMatch) return res.status(400).json({ message: 'Usuario o contraseña incorrecta' });
         const token = await createAccessToken({ id: userFound._id });
         res.cookie('token', token)
         res.json({
-            menssage: 'User logged in successfully',
+            menssage: 'El usuario ha iniciado sesión exitosamente',
         })
     } catch (e) {
         res.status(500).json({ message: e.message })
@@ -85,3 +86,54 @@ export const verifyToken = async (req, res) => {
         });
     });
 };
+// export const fetchDevices = async (req, res) => {
+//     try {
+//         const response = await axios.get('http://45.173.112.9:7557/devices');
+//         const devices = response.data.map(device => ({
+//             _id: device._id,
+//             _Manufacturer: device._deviceId._Manufacturer,
+//             WANDevice: device.InternetGatewayDevice.WANDevice['1'].WANConnectionDevice['1'].WANIPConnection['1'].ExternalIPAddress['_value'],
+//             _ProductClass: device._deviceId._ProductClass,
+//             _SerialNumber: device._deviceId._SerialNumber,
+//         }));
+//         return res.json(devices);
+//     } catch (error) {
+//         return res.status(500).json({ message: 'Error al obtener los dispositivos', error: error.message });
+//     }
+// };
+export const fetchDevices = async (req, res) => {
+    try {
+        const response = await axios.get('http://45.173.112.9:7557/devices');
+        const devices = response.data.map(device => {
+            // Inicializar WANDevice como null
+            let WANDevice = null;
+            // Buscar en WANConnectionDevice desde '1' hasta '8'
+            for (let i = 1; i <= 8; i++) {
+                // Verificar si el objeto y la propiedad deseada existen
+                if (device.InternetGatewayDevice.WANDevice['1'].WANConnectionDevice[i] &&
+                    device.InternetGatewayDevice.WANDevice['1'].WANConnectionDevice[i].WANIPConnection['1'] &&
+                    device.InternetGatewayDevice.WANDevice['1'].WANConnectionDevice[i].WANIPConnection['1'].ExternalIPAddress['_value']) {
+                    // Asignar el valor de ExternalIPAddress a WANDevice
+                    WANDevice = device.InternetGatewayDevice.WANDevice['1'].WANConnectionDevice[i].WANIPConnection['1'].ExternalIPAddress['_value'];
+                    // Salir del bucle una vez que se encuentra el dato
+                    break;
+                }
+            }
+            // Devolver el objeto con la propiedad WANDevice solo si se encontró un valor
+            return {
+                _id: device._id,
+                _Manufacturer: device._deviceId._Manufacturer,
+                WANDevice, // Esto será null si no se encontró ningún valor
+                _ProductClass: device._deviceId._ProductClass,
+                _SerialNumber: device._deviceId._SerialNumber,
+            };
+        });
+        return res.json(devices);
+    } catch (error) {
+        return res.status(500).json({ message: 'Error al obtener los dispositivos', error: error.message });
+    }
+};
+
+
+
+

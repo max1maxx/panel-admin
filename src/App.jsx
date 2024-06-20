@@ -11,6 +11,8 @@ import Login from "./screens/login/LoginScreen";
 import ConfigScreen from "./screens/config/ConfigScreen";
 import { AuthProvider } from "./context/AuthContext";
 import { ProtectedRoute } from "./routes";
+import { ConfigProvider } from "./context/ConfigContext";
+import EditarScreen from "./screens/edit/EditarScreen";
 function App() {
   const { theme, toggleTheme } = useContext(ThemeContext);
 
@@ -25,31 +27,36 @@ function App() {
 
   return (
     <AuthProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          {/* <Route path="/login" element={<Login />} /> */}
-          <Route element={<BaseLayout />}>
-            <Route element={<ProtectedRoute />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/config" element={<ConfigScreen />} />
-              <Route path="*" element={<PageNotFound />} />
+      <ConfigProvider>
+
+        <Router>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            {/* <Route path="/login" element={<Login />} /> */}
+            <Route element={<BaseLayout />}>
+              <Route element={<ProtectedRoute />}>
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/dispositivos" element={<ConfigScreen />} />
+                <Route path="/editar/:id" element={<EditarScreen />} />
+                <Route path="*" element={<PageNotFound />} />
+              </Route>
+
             </Route>
+          </Routes>
 
-          </Route>
-        </Routes>
+          <button
+            type="button"
+            className="theme-toggle-btn"
+            onClick={toggleTheme}
+          >
+            <img
+              className="theme-icon"
+              src={theme === LIGHT_THEME ? SunIcon : MoonIcon}
+            />
+          </button>
+        </Router>
+      </ConfigProvider>
 
-        <button
-          type="button"
-          className="theme-toggle-btn"
-          onClick={toggleTheme}
-        >
-          <img
-            className="theme-icon"
-            src={theme === LIGHT_THEME ? SunIcon : MoonIcon}
-          />
-        </button>
-      </Router>
     </AuthProvider>
   );
 }

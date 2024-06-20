@@ -1,81 +1,89 @@
+import { useEffect, useState } from "react";
 import AreaTableAction from "../../components/dashboard/areaTable/AreaTableAction";
+import { useConfig } from "../../context/ConfigContext";
+import Pagination from 'react-bootstrap/Pagination';
+import Form from 'react-bootstrap/Form';
 
 const TABLE_HEADS = [
-    "Products",
-    "Order ID",
-    "Date",
-    "Customer name",
-    "Status",
-    "Amount",
-    "Action",
-];
-
-const TABLE_DATA = [
-    {
-        id: 100,
-        name: "Iphone 13 Pro",
-        order_id: 11232,
-        date: "Jun 29,2022",
-        customer: "Afaq Karim",
-        status: "delivered",
-        amount: 400,
-    },
-    {
-        id: 101,
-        name: "Macbook Pro",
-        order_id: 11232,
-        date: "Jun 29,2022",
-        customer: "Afaq Karim",
-        status: "pending",
-        amount: 288,
-    },
-    {
-        id: 102,
-        name: "Apple Watch",
-        order_id: 11232,
-        date: "Jun 29,2022",
-        customer: "Afaq Karim",
-        status: "canceled",
-        amount: 500,
-    },
-    {
-        id: 103,
-        name: "Microsoft Book",
-        order_id: 11232,
-        date: "Jun 29,2022",
-        customer: "Afaq Karim",
-        status: "delivered",
-        amount: 100,
-    },
-    {
-        id: 104,
-        name: "Apple Pen",
-        order_id: 11232,
-        date: "Jun 29,2022",
-        customer: "Afaq Karim",
-        status: "delivered",
-        amount: 60,
-    },
-    {
-        id: 105,
-        name: "Airpods",
-        order_id: 11232,
-        date: "Jun 29,2022",
-        customer: "Afaq Karim",
-        status: "delivered",
-        amount: 80,
-    },
+    "Fabricante",
+    "WAN IP",
+    "Clase de Produto",
+    "Número de Serie",
+    "Acciones",
 ];
 
 const Config = () => {
+    const { getDevices, configs } = useConfig();
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(5);
+    const [searchTerm, setSearchTerm] = useState('');
+
+    useEffect(() => {
+        getDevices();
+    }, []);
+
+    const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+        setCurrentPage(1);
+    };
+
+    const filteredConfigs = configs.filter(config =>
+        config._id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        config._Manufacturer.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        config.WANDevice.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        config._ProductClass.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        config._SerialNumber.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    const pageCount = Math.ceil(filteredConfigs.length / itemsPerPage);
+    const currentTableData = filteredConfigs.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
+
+    const handlePageClick = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
+    const handleItemsPerPageChange = (e) => {
+        setItemsPerPage(parseInt(e.target.value));
+        setCurrentPage(1);
+    };
+
     return (
         <>
             <div className="p-2">
-                <h2 className="area-top-title">Configuración</h2>
+                <h2 className="area-top-title">Dispositivos</h2>
+            </div>
+            <div className="form-group row mx-0 mb-2 data-table-controls">
+                <div className="col-12 col-md-8 py-2">
+                    <Form.Control
+                        type="text"
+                        placeholder="Buscar..."
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                    />
+                </div>
+                <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 py-2">
+                    <div className="row justify-content-end">
+                        <div className="col-6 col-sm-5 my-auto text-end">
+                            <label className="col-12 area-top-title"><b>Mostrar :</b></label>
+                        </div>
+                        <div className="col-6 col-sm-4">
+                            <Form.Select value={itemsPerPage} onChange={handleItemsPerPageChange}>
+                                <option value={5}>5</option>
+                                <option value={10}>10</option>
+                                <option value={25}>25</option>
+                                <option value={50}>50</option>
+                                <option value={100}>100</option>
+                            </Form.Select>
+                        </div>
+                    </div>
+                </div>
             </div>
             <section className="content-area-table">
                 <div className="data-table-info">
-                    <h4 className="data-table-title">Latest Orders</h4>
+                    <h4 className="data-table-title">Listado de dispositivos ONT</h4>
                 </div>
                 <div className="data-table-diagram">
                     <table>
@@ -87,24 +95,15 @@ const Config = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {TABLE_DATA?.map((dataItem) => {
+                            {currentTableData.map((dataItem) => {
                                 return (
-                                    <tr key={dataItem.id}>
-                                        <td>{dataItem.name}</td>
-                                        <td>{dataItem.order_id}</td>
-                                        <td>{dataItem.date}</td>
-                                        <td>{dataItem.customer}</td>
-                                        <td>
-                                            <div className="dt-status">
-                                                <span
-                                                    className={`dt-status-dot dot-${dataItem.status}`}
-                                                ></span>
-                                                <span className="dt-status-text">{dataItem.status}</span>
-                                            </div>
-                                        </td>
-                                        <td>${dataItem.amount.toFixed(2)}</td>
+                                    <tr key={dataItem._id}>
+                                        <td>{dataItem._Manufacturer}</td>
+                                        <td>{dataItem.WANDevice}</td>
+                                        <td>{dataItem._ProductClass}</td>
+                                        <td>{dataItem._SerialNumber}</td>
                                         <td className="dt-cell-action">
-                                            <AreaTableAction />
+                                            <AreaTableAction id={dataItem._id} />
                                         </td>
                                     </tr>
                                 );
@@ -112,9 +111,20 @@ const Config = () => {
                         </tbody>
                     </table>
                 </div>
+                <div className="d-flex justify-content-between align-items-center">
+                    <Pagination>
+                        {[...Array(pageCount).keys()].map(number => (
+                            <Pagination.Item key={number + 1} active={number + 1 === currentPage} onClick={() => handlePageClick(number + 1)}>
+                                {number + 1}
+                            </Pagination.Item>
+                        ))}
+                    </Pagination>
+                    <div className="total-records">
+                        <p className="area-top-title">Total de registros: {filteredConfigs.length}</p>
+                    </div>
+                </div>
             </section>
         </>
-
     );
 };
 
