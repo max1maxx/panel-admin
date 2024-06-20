@@ -195,9 +195,23 @@ const EditarMapeoPuertos = () => {
                                 <Form.Control
                                     type="text"
                                     placeholder="Ingrese el puerto interno"
-                                    {...register("interno", { required: true })}
+                                    maxLength={5}
+                                    {...register("interno", {
+                                        required: true, pattern: {
+                                            value: /^[0-9]*$/,
+                                            message: "Solo se permiten números."
+                                        }, maxLength: {
+                                            value: 5,
+                                            message: "El puerto interno no puede tener más de 5 dígitos."
+                                        }
+                                    })}
+                                    onInput={(e) => {
+                                        e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                                    }}
                                 />
-                                {errors.interno && <p className="text-danger">El puerto interno es obligatorio.</p>}
+                                {errors.interno && errors.interno.type === "required" && <p className="text-danger">El puerto interno es obligatorio.</p>}
+                                {errors.interno && errors.interno.type === "pattern" && <p className="text-danger">{errors.interno.message}</p>}
+                                {errors.interno && errors.interno.type === "maxLength" && <p className="text-danger">{errors.interno.message}</p>}
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formExterno">
@@ -205,9 +219,25 @@ const EditarMapeoPuertos = () => {
                                 <Form.Control
                                     type="text"
                                     placeholder="Ingrese el puerto externo"
-                                    {...register("externo", { required: true })}
+                                    maxLength={5}
+                                    {...register("externo", {
+                                        required: true,
+                                        pattern: {
+                                            value: /^[0-9]*$/,
+                                            message: "Solo se permiten números."
+                                        },
+                                        maxLength: {
+                                            value: 5,
+                                            message: "El puerto externo no puede tener más de 5 dígitos."
+                                        }
+                                    })}
+                                    onInput={(e) => {
+                                        e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                                    }}
                                 />
-                                {errors.externo && <p className="text-danger">El puerto externo es obligatorio.</p>}
+                                {errors.externo && errors.externo.type === "required" && <p className="text-danger">El puerto externo es obligatorio.</p>}
+                                {errors.externo && errors.externo.type === "pattern" && <p className="text-danger">{errors.externo.message}</p>}
+                                {errors.externo && errors.externo.type === "maxLength" && <p className="text-danger">{errors.externo.message}</p>}
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formIpHost">
@@ -215,10 +245,18 @@ const EditarMapeoPuertos = () => {
                                 <Form.Control
                                     type="text"
                                     placeholder="Ingrese la IP del host"
-                                    {...register("ipHost", { required: true })}
+                                    {...register("ipHost", {
+                                        required: true,
+                                        pattern: {
+                                            value: /^(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])$/,
+                                            message: "Ingrese una dirección IP válida."
+                                        }
+                                    })}
                                 />
-                                {errors.ipHost && <p className="text-danger">La IP del host es obligatoria.</p>}
+                                {errors.ipHost && errors.ipHost.type === "required" && <p className="text-danger">La IP del host es obligatoria.</p>}
+                                {errors.ipHost && errors.ipHost.type === "pattern" && <p className="text-danger">{errors.ipHost.message}</p>}
                             </Form.Group>
+
 
                             <Form.Group className="mb-3" controlId="formNombre">
                                 <Form.Label>Nombre</Form.Label>

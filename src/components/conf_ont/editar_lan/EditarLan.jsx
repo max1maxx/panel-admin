@@ -85,9 +85,16 @@ const EditarLan = () => {
                                 <Form.Control
                                     type="text"
                                     placeholder="Ingrese la máscara de subred"
-                                    {...register("mascara", { required: true })}
+                                    {...register("mascara", {
+                                        required: true,
+                                        pattern: {
+                                            value: /^(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])$/,
+                                            message: "Ingrese una máscara de subred válida."
+                                        }
+                                    })}
                                 />
-                                {errors.mascara && <p className="text-danger">La máscara de subred es obligatoria.</p>}
+                                {errors.mascara && errors.mascara.type === "required" && <p className="text-danger">La máscara de subred es obligatoria.</p>}
+                                {errors.mascara && errors.mascara.type === "pattern" && <p className="text-danger">{errors.mascara.message}</p>}
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formIpMin">
@@ -95,9 +102,16 @@ const EditarLan = () => {
                                 <Form.Control
                                     type="text"
                                     placeholder="Ingrese la IP mínima"
-                                    {...register("ipMin", { required: true })}
+                                    {...register("ipMin", {
+                                        required: true,
+                                        pattern: {
+                                            value: /^(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])$/,
+                                            message: "Ingrese una IP mínima válida."
+                                        }
+                                    })}
                                 />
-                                {errors.ipMin && <p className="text-danger">La IP mínima es obligatoria.</p>}
+                                {errors.ipMin && errors.ipMin.type === "required" && <p className="text-danger">La IP mínima es obligatoria.</p>}
+                                {errors.ipMin && errors.ipMin.type === "pattern" && <p className="text-danger">{errors.ipMin.message}</p>}
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formIpMax">
@@ -105,20 +119,36 @@ const EditarLan = () => {
                                 <Form.Control
                                     type="text"
                                     placeholder="Ingrese la IP máxima"
-                                    {...register("ipMax", { required: true })}
+                                    {...register("ipMax", {
+                                        required: true,
+                                        pattern: {
+                                            value: /^(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])$/,
+                                            message: "Ingrese una IP máxima válida."
+                                        }
+                                    })}
                                 />
-                                {errors.ipMax && <p className="text-danger">La IP máxima es obligatoria.</p>}
+                                {errors.ipMax && errors.ipMax.type === "required" && <p className="text-danger">La IP máxima es obligatoria.</p>}
+                                {errors.ipMax && errors.ipMax.type === "pattern" && <p className="text-danger">{errors.ipMax.message}</p>}
                             </Form.Group>
+
 
                             <Form.Group className="mb-3" controlId="formDns">
                                 <Form.Label>DNS</Form.Label>
                                 <Form.Control
                                     type="text"
                                     placeholder="Ingrese los DNS"
-                                    {...register("dns", { required: true })}
+                                    {...register("dns", {
+                                        required: true,
+                                        pattern: {
+                                            value: /^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(,\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})*$/,
+                                            message: "Ingrese direcciones DNS válidas, separadas por comas si hay múltiples (por ejemplo, 8.8.8.8,1.1.1.1)."
+                                        }
+                                    })}
                                 />
-                                {errors.dns && <p className="text-danger">Los DNS son obligatorios.</p>}
+                                {errors.dns && errors.dns.type === "required" && <p className="text-danger">Los DNS son obligatorios.</p>}
+                                {errors.dns && errors.dns.type === "pattern" && <p className="text-danger">{errors.dns.message}</p>}
                             </Form.Group>
+
 
                             <Button variant="primary" type="submit">
                                 Guardar cambios
