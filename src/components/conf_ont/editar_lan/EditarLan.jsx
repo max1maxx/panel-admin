@@ -37,6 +37,16 @@ const EditarLan = () => {
             }
         };
         console.log(formattedData);
+
+        Swal.fire({
+            title: 'Cargando...',
+            text: 'Por favor espera mientras se guardan los cambios.',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
         cambiarLan(formattedData)
             .then(() => {
                 Swal.fire({

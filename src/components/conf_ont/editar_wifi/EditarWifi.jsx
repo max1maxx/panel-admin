@@ -11,12 +11,8 @@ const EditarWifi = () => {
     const { cambiarNombreClaveWifi, obtenerDatosConfigurados, dataConfig } = useConfig();
     const [loading, setLoading] = useState(true);
 
-    const dataId = {
-        id: id,
-    }
-
     useEffect(() => {
-        obtenerDatosConfigurados(dataId).then(() => {
+        obtenerDatosConfigurados({id}).then(() => {
             setLoading(false);
         });
     }, [id]);
@@ -36,7 +32,15 @@ const EditarWifi = () => {
                 password: data.wifiPassword
             }
         };
-        console.log(formattedData);
+        Swal.fire({
+            title: 'Cargando...',
+            text: 'Por favor espera mientras se guardan los cambios.',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
         cambiarNombreClaveWifi(formattedData)
             .then(() => {
                 Swal.fire({
@@ -44,7 +48,7 @@ const EditarWifi = () => {
                     text: 'El nombre y la contraseña de WiFi han sido actualizados.',
                     icon: 'success',
                     confirmButtonText: 'Aceptar'
-                })
+                });
             })
             .catch((error) => {
                 console.error("Error al cambiar nombre y clave de WiFi:", error);

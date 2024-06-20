@@ -30,7 +30,7 @@ const Config = () => {
     const filteredConfigs = configs.filter(config =>
         config._id.toLowerCase().includes(searchTerm.toLowerCase()) ||
         config._Manufacturer.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        config.WANDevice.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        config._WANDevice.toLowerCase().includes(searchTerm.toLowerCase()) ||
         config._ProductClass.toLowerCase().includes(searchTerm.toLowerCase()) ||
         config._SerialNumber.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -99,7 +99,7 @@ const Config = () => {
                                 return (
                                     <tr key={dataItem._id}>
                                         <td>{dataItem._Manufacturer}</td>
-                                        <td>{dataItem.WANDevice}</td>
+                                        <td>{dataItem._WANDevice}</td>
                                         <td>{dataItem._ProductClass}</td>
                                         <td>{dataItem._SerialNumber}</td>
                                         <td className="dt-cell-action">

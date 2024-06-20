@@ -86,21 +86,7 @@ export const verifyToken = async (req, res) => {
         });
     });
 };
-// export const fetchDevices = async (req, res) => {
-//     try {
-//         const response = await axios.get('http://45.173.112.9:7557/devices');
-//         const devices = response.data.map(device => ({
-//             _id: device._id,
-//             _Manufacturer: device._deviceId._Manufacturer,
-//             WANDevice: device.InternetGatewayDevice.WANDevice['1'].WANConnectionDevice['1'].WANIPConnection['1'].ExternalIPAddress['_value'],
-//             _ProductClass: device._deviceId._ProductClass,
-//             _SerialNumber: device._deviceId._SerialNumber,
-//         }));
-//         return res.json(devices);
-//     } catch (error) {
-//         return res.status(500).json({ message: 'Error al obtener los dispositivos', error: error.message });
-//     }
-// };
+
 export const fetchDevices = async (req, res) => {
     try {
         const response = await axios.get('http://45.173.112.9:7557/devices');

@@ -35,20 +35,15 @@ const AreaTableAction = ({ id }) => {
           <div className="action-dropdown-menu" ref={dropdownRef}>
             <ul className="navbar-nav">
               <li className="dropdown-item">
-                <Link to={`/informacion/${id}`} className="dropdown-menu-link">
-                  Ver
-                </Link>
-              </li>
-              <li className="dropdown-item">
                 <Link to={`/editar/${id}`} className="dropdown-menu-link">
                   Editar
                 </Link>
               </li>
-              <li className="dropdown-item">
+              {/* <li className="dropdown-item">
                 <Link to={`/eliminar/${id}`} className="dropdown-menu-link">
                   Eliminar
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
         )}
