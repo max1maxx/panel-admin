@@ -35,7 +35,7 @@ function App() {
             {/* <Route path="/login" element={<Login />} /> */}
             <Route element={<BaseLayout />}>
               <Route element={<ProtectedRoute />}>
-                <Route path="/dashboard" element={<Dashboard />} />
+                {/* <Route path="/dashboard" element={<Dashboard />} /> */}
                 <Route path="/dispositivos" element={<ConfigScreen />} />
                 <Route path="/editar/:id" element={<EditarScreen />} />
                 <Route path="*" element={<PageNotFound />} />

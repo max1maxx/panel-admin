@@ -49,14 +49,14 @@ const Sidebar = () => {
       <div className="sidebar-body">
         <div className="container-fluid">
           <ul className="navbar-nav">
-            <li className="menu-item nav-item">
+            {/* <li className="menu-item nav-item">
               <Link to="/dashboard" className={`menu-link ${isActive('/dashboard')}`}>
                 <span className="menu-link-icon">
                   <MdOutlineGridView size={18} />
                 </span>
                 <span className="menu-link-text">Dashboard</span>
               </Link>
-            </li>
+            </li> */}
             <li className="menu-item nav-item">
               <Link to="/dispositivos" className={`menu-link ${isActive('/dispositivos')}`}>
                 <span className="menu-link-icon">
