@@ -4,6 +4,8 @@ import { useConfig } from "../../context/ConfigContext";
 import { useEffect, useState } from "react";
 import EditarLan from "../../components/conf_ont/editar_lan/EditarLan";
 import EditarMapeoPuertos from "../../components/conf_ont/editar_mapeo_puertos/EditarMapeoPuertos";
+import { IoMdArrowRoundBack } from "react-icons/io";
+
 
 const EditarScreen = () => {
     const { id } = useParams();
@@ -27,6 +29,7 @@ const EditarScreen = () => {
                                 <p><strong>Clase de Producto:</strong> {ontInfo._ProductClass}</p>
                                 <p><strong>Número de Serie:</strong> {ontInfo._SerialNumber}</p>
                                 <Link to="/dispositivos" className="btn btn-primary mt-3">
+                                    <IoMdArrowRoundBack size={20} />
                                     Volver a dispositivos
                                 </Link>
                             </div>

@@ -3,6 +3,7 @@ import { ThemeContext } from "../../context/ThemeContext";
 import { LIGHT_THEME } from "../../constants/themeConstants";
 import LogoBlue from "../../assets/images/logo_blue.svg";
 import LogoWhite from "../../assets/images/logo_white.svg";
+import LogoWWW from "../../assets/images/www.svg";
 import {
   MdOutlineAttachMoney,
   MdOutlineBarChart,
@@ -38,9 +39,8 @@ const Sidebar = () => {
     >
       <div className="sidebar-top">
         <div className="navbar-brand">
-          <img src={theme === LIGHT_THEME ? LogoBlue : LogoWhite} alt="" />
-          {/* <img src="https://power.net.ec/app/imagenes/proyecto/logo_powernet.svg" className="img-logo-menu"/> */}
-          <span className="sidebar-brand-text">powertesis</span>
+          <img src={LogoWWW} alt=""/>
+          <span className="sidebar-brand-text p-2">power admin</span>
         </div>
         <button className="sidebar-close-btn" onClick={closeSidebar}>
           <MdOutlineClose size={24} />

@@ -3,6 +3,8 @@ import AreaTableAction from "../../components/dashboard/areaTable/AreaTableActio
 import { useConfig } from "../../context/ConfigContext";
 import Pagination from 'react-bootstrap/Pagination';
 import Form from 'react-bootstrap/Form';
+import { FaEdit } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const TABLE_HEADS = [
     "Fabricante",
@@ -103,7 +105,10 @@ const Config = () => {
                                         <td>{dataItem._ProductClass}</td>
                                         <td>{dataItem._SerialNumber}</td>
                                         <td className="dt-cell-action">
-                                            <AreaTableAction id={dataItem._id} />
+                                            {/* <AreaTableAction id={dataItem._id} /> */}
+                                            <Link to={`/editar/${dataItem._id}`}>
+                                                <FaEdit size={20}/>
+                                            </Link>
                                         </td>
                                     </tr>
                                 );

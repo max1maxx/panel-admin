@@ -4,6 +4,9 @@ import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useConfig } from '../../../context/ConfigContext';
 import Swal from "sweetalert2";
+import { FaSave } from "react-icons/fa";
+import { MdOutlineAdd } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 
 const EditarMapeoPuertos = () => {
     const { id } = useParams();
@@ -169,6 +172,7 @@ const EditarMapeoPuertos = () => {
                 <td>{puerto.nombre}</td>
                 <td>
                     <Button variant="danger" size="sm" onClick={() => handleDeleteClick(index)} disabled={confirmDeleteId === index}>
+                        <MdDelete size={20}/>
                         Eliminar
                     </Button>
                 </td>
@@ -186,7 +190,8 @@ const EditarMapeoPuertos = () => {
                 <div className="card">
                     <div className="card-header">
                         <span>Editar Mapeo de Puertos</span>
-                        <Button variant="primary" className="float-end" onClick={() => reset()}>Nuevo</Button>
+                        <Button variant="primary" className="float-end" onClick={() => reset()}><MdOutlineAdd size={20} />
+                            Nuevo</Button>
                     </div>
                     <div className="card-body">
                         <form onSubmit={onSubmit}>
@@ -269,7 +274,7 @@ const EditarMapeoPuertos = () => {
                             </Form.Group>
 
                             <Button variant="primary" type="submit">
-                                Guardar cambios
+                                <FaSave size={20} /> Guardar cambios
                             </Button>
                         </form>
 
@@ -301,34 +306,37 @@ const EditarMapeoPuertos = () => {
                                 </div>
                             </div>
                         </div>
-
-                        <Table striped bordered hover className="mt-3">
-                            <thead>
-                                <tr>
-                                    <th>Puerto Interno</th>
-                                    <th>Puerto Externo</th>
-                                    <th>IP del Host</th>
-                                    <th>Nombre</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {renderTableRows()}
-                            </tbody>
-                        </Table>
-
-                        <div className="d-flex justify-content-between align-items-center mt-3">
-                            <Pagination>
-                                {[...Array(pageCount).keys()].map(number => (
-                                    <Pagination.Item key={number + 1} active={number + 1 === currentPage} onClick={() => handlePageClick(number + 1)}>
-                                        {number + 1}
-                                    </Pagination.Item>
-                                ))}
-                            </Pagination>
-                            <div className="total-records">
-                                <p className="area-top-title">Total de registros: {filteredPuertos.length}</p>
+                        <section className="content-area-table">
+                            <div className="data-table-diagram">
+                                <Table>
+                                    <thead>
+                                        <tr>
+                                            <th>Puerto Interno</th>
+                                            <th>Puerto Externo</th>
+                                            <th>IP del Host</th>
+                                            <th>Nombre</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {renderTableRows()}
+                                    </tbody>
+                                </Table>
                             </div>
-                        </div>
+                            <div className="d-flex justify-content-between align-items-center mt-3">
+                                <Pagination>
+                                    {[...Array(pageCount).keys()].map(number => (
+                                        <Pagination.Item key={number + 1} active={number + 1 === currentPage} onClick={() => handlePageClick(number + 1)}>
+                                            {number + 1}
+                                        </Pagination.Item>
+                                    ))}
+                                </Pagination>
+                                <div className="total-records">
+                                    <p className="area-top-title">Total de registros: {filteredPuertos.length}</p>
+                                </div>
+                            </div>
+                        </section>
+
                     </div>
                 </div>
             </div>

@@ -28,7 +28,6 @@ function App() {
   return (
     <AuthProvider>
       <ConfigProvider>
-
         <Router>
           <Routes>
             <Route path="/" element={<Login />} />
@@ -44,7 +43,7 @@ function App() {
             </Route>
           </Routes>
 
-          <button
+          {/* <button
             type="button"
             className="theme-toggle-btn"
             onClick={toggleTheme}
@@ -53,10 +52,9 @@ function App() {
               className="theme-icon"
               src={theme === LIGHT_THEME ? SunIcon : MoonIcon}
             />
-          </button>
+          </button> */}
         </Router>
       </ConfigProvider>
-
     </AuthProvider>
   );
 }

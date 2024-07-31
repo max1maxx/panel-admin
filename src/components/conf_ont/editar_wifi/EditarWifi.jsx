@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useConfig } from '../../../context/ConfigContext';
 import Swal from "sweetalert2";
+import { FaSave } from "react-icons/fa";
+
 
 const EditarWifi = () => {
     const { id } = useParams();
@@ -95,7 +97,7 @@ const EditarWifi = () => {
                             </Form.Group>
 
                             <Button variant="primary" type="submit">
-                                Guardar cambios
+                            <FaSave size={20}/>  Guardar cambios
                             </Button>
                         </form>
                     </div>

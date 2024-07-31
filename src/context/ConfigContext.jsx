@@ -33,7 +33,7 @@ export function ConfigProvider({ children }) {
         try {
             const res = await getDevicesRequestById(data);
             setDataById(res.data);
-            console.log(res.data);
+            // console.log(res.data);
         } catch (error) {
             console.error('Error al obtener el dispositivo:', error.message);
         }
@@ -42,7 +42,7 @@ export function ConfigProvider({ children }) {
     const cambiarNombreClaveWifi = async (data) => {
         try {
             const res = await changeWifiConfig(data);
-            console.log(res);
+            // console.log(res);
         } catch (error) {
             console.error('Error al enviar los datos:', error);
         }
@@ -51,7 +51,7 @@ export function ConfigProvider({ children }) {
     const cambiarLan = async (data) => {
         try {
             const res = await changeLanConfig(data);
-            console.log(res);
+            // console.log(res);
         } catch (error) {
             console.error('Error al enviar los datos:', error);
         }
@@ -60,7 +60,7 @@ export function ConfigProvider({ children }) {
     const cambiarMapeoPuertos = async (data) => {
         try {
             const res = await changeMapPortsConfig(data);
-            console.log(res);
+            // console.log(res);
         } catch (error) {
             console.error('Error al enviar los datos:', error);
         }
@@ -70,7 +70,7 @@ export function ConfigProvider({ children }) {
         try {
             const res = await getConfigs(data);
             setDataConfig(res.data)
-            console.log(res.data);
+            // console.log(res.data);
         } catch (error) {
             console.error('Error al obtener los datos:', error);
         }

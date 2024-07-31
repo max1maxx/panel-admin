@@ -6,12 +6,17 @@ import cors from 'cors'
 
 const app = express();
 app.use(cors({
-    origin: 'http://localhost:5173',
-    credentials: true
-}));
+    origin: 'http://localhost:5173'}));
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(cookieParser());
 app.use('/api', authRoutes);
+
+
+// app.use(express.static("public"));
+// app.get("*", (req, res) => {
+//     res.sendFile(path.join(__dirname, "build", "index.html"));
+// });
+
 
 export default app;

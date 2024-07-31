@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useConfig } from '../../../context/ConfigContext';
 import Swal from "sweetalert2";
+import { FaSave } from "react-icons/fa";
 
 const EditarLan = () => {
     const { id } = useParams();
@@ -151,7 +152,7 @@ const EditarLan = () => {
 
 
                             <Button variant="primary" type="submit">
-                                Guardar cambios
+                            <FaSave size={20}/> Guardar cambios
                             </Button>
                         </form>
                     </div>
