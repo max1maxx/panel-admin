@@ -7,10 +7,11 @@ import { FaEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const TABLE_HEADS = [
+    "Cédula/RUC",
     "Fabricante",
     "WAN IP",
-    "Clase de Produto",
-    "Número de Serie",
+    "Modelo",
+    "Puerto PON",
     "Acciones",
 ];
 
@@ -31,10 +32,11 @@ const Config = () => {
 
     const filteredConfigs = configs.filter(config =>
         config._id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        config._Manufacturer.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        config._WANDevice.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        config._ProductClass.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        config._SerialNumber.toLowerCase().includes(searchTerm.toLowerCase())
+        config.cedulaRUC.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        config.marca.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        config.ipWAN.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        config.modelo.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        config.puertoPON.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const pageCount = Math.ceil(filteredConfigs.length / itemsPerPage);
@@ -100,10 +102,11 @@ const Config = () => {
                             {currentTableData.map((dataItem) => {
                                 return (
                                     <tr key={dataItem._id}>
-                                        <td>{dataItem._Manufacturer}</td>
-                                        <td>{dataItem._WANDevice}</td>
-                                        <td>{dataItem._ProductClass}</td>
-                                        <td>{dataItem._SerialNumber}</td>
+                                        <td>{dataItem.cedulaRUC}</td>
+                                        <td>{dataItem.marca}</td>
+                                        <td>{dataItem.ipWAN}</td>
+                                        <td>{dataItem.modelo}</td>
+                                        <td>{dataItem.puertoPON}</td>
                                         <td className="dt-cell-action">
                                             {/* <AreaTableAction id={dataItem._id} /> */}
                                             <Link to={`/editar/${dataItem._id}`}>

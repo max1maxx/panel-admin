@@ -7,24 +7,25 @@ import Swal from "sweetalert2";
 import { FaSave } from "react-icons/fa";
 
 
-const EditarWifi = () => {
+const EditarWifi = ({dato}) => {
     const { id } = useParams();
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
-    const { cambiarNombreClaveWifi, obtenerDatosConfigurados, dataConfig } = useConfig();
+    const { cambiarNombreClaveWifi } = useConfig();
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        obtenerDatosConfigurados({id}).then(() => {
-            setLoading(false);
-        });
+    useEffect(() => {        
+        // obtenerDatosConfigurados({id}).then(() => {
+        //     setLoading(false);
+        // });
+        setLoading(false);
     }, [id]);
 
     useEffect(() => {
-        if (dataConfig && dataConfig.wifi) {
-            setValue("wifiName", dataConfig.wifi.ssid);
-            setValue("wifiPassword", dataConfig.wifi.password);
+        if (dato && dato.wifi) {
+            setValue("wifiName", dato.wifi.ssid);
+            setValue("wifiPassword", dato.wifi.password);
         }
-    }, [dataConfig, setValue]);
+    });
 
     const onSubmit = handleSubmit((data) => {
         const formattedData = {

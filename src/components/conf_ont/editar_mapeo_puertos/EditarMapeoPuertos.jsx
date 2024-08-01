@@ -8,10 +8,10 @@ import { FaSave } from "react-icons/fa";
 import { MdOutlineAdd } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 
-const EditarMapeoPuertos = () => {
+const EditarMapeoPuertos = ({dato}) => {
     const { id } = useParams();
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
-    const { cambiarMapeoPuertos, obtenerDatosConfigurados, dataConfig } = useConfig();
+    const { cambiarMapeoPuertos } = useConfig();
     const [loading, setLoading] = useState(true);
     const [puertos, setPuertos] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -20,16 +20,17 @@ const EditarMapeoPuertos = () => {
     const [confirmDeleteId, setConfirmDeleteId] = useState(null);
 
     useEffect(() => {
-        obtenerDatosConfigurados({ id }).then(() => {
-            setLoading(false);
-        });
+        // obtenerDatosConfigurados({ id }).then(() => {
+        //     setLoading(false);
+        // });
+        setLoading(false);
     }, [id]);
 
     useEffect(() => {
-        if (dataConfig && dataConfig.puertos) {
-            setPuertos(dataConfig.puertos);
+        if (dato && dato.puertos) {
+            setPuertos(dato.puertos);
         }
-    }, [dataConfig]);
+    });
 
     const onSubmit = handleSubmit((data) => {
         const newPuertos = [...puertos, {

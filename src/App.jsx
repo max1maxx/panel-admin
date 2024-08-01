@@ -39,7 +39,6 @@ function App() {
                 <Route path="/editar/:id" element={<EditarScreen />} />
                 <Route path="*" element={<PageNotFound />} />
               </Route>
-
             </Route>
           </Routes>
 

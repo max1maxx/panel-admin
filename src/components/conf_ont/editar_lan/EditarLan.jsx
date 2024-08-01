@@ -6,26 +6,27 @@ import { useConfig } from '../../../context/ConfigContext';
 import Swal from "sweetalert2";
 import { FaSave } from "react-icons/fa";
 
-const EditarLan = () => {
+const EditarLan = ({dato}) => {
     const { id } = useParams();
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
-    const { cambiarLan, obtenerDatosConfigurados, dataConfig } = useConfig();
+    const { cambiarLan } = useConfig();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        obtenerDatosConfigurados({ id }).then(() => {
-            setLoading(false);
-        });
+        // obtenerDatosConfigurados({ id }).then(() => {
+        //     setLoading(false);
+        // });
+        setLoading(false);
     }, [id]);
 
     useEffect(() => {
-        if (dataConfig && dataConfig.lan) {
-            setValue("mascara", dataConfig.lan.mascara);
-            setValue("ipMin", dataConfig.lan.ipMin);
-            setValue("ipMax", dataConfig.lan.ipMax);
-            setValue("dns", dataConfig.lan.dns);
+        if (dato && dato.lan) {
+            setValue("mascara", dato.lan.mascara);
+            setValue("ipMin", dato.lan.ipMin);
+            setValue("ipMax", dato.lan.ipMax);
+            setValue("dns", dato.lan.dns);
         }
-    }, [dataConfig, setValue]);
+    });
 
     const onSubmit = handleSubmit((data) => {
         const formattedData = {
