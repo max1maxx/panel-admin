@@ -65,14 +65,14 @@ const Sidebar = () => {
                 <span className="menu-link-text">Dispositivos</span>
               </Link>
             </li>
-            {/* <li className="menu-item">
-              <Link to="/" className="menu-link">
+            <li className="menu-item">
+              <Link to="/usuarios" className={`menu-link ${isActive('/usuarios')}`}>
                 <span className="menu-link-icon">
-                  <MdOutlineBarChart size={20} />
+                  <MdOutlinePeople size={20} />
                 </span>
-                <span className="menu-link-text">Statistics</span>
+                <span className="menu-link-text">Usuarios</span>
               </Link>
-            </li> */}
+            </li>
             {/* <li className="menu-item">
               <Link to="/" className="menu-link">
                 <span className="menu-link-icon">

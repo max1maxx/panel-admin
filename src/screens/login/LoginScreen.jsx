@@ -39,12 +39,12 @@ const Login = () => {
                         ))}
                     </div>
                     <div className="form-floating">
-                        <input type="email" className="form-control" name="email" placeholder="example@example.com" {...register("email", { required: true })} />
-                        <label htmlFor="email">Ingrese el email</label>
+                        <input type="identi" className="form-control" name="identi" placeholder="Ingrese su identificación" {...register("identi", { required: true })} />
+                        <label htmlFor="identi">Ingrese su identificación</label>
                     </div>
-                    <p>{errors.email?.message}</p>
+                    <p>{errors.identi?.message}</p>
                     <div className="form-floating">
-                        <input id="password" className="form-control" type="password" placeholder="Contraseña" {...register("password", { required: true, minLength: 6 })} />
+                        <input id="password" className="form-control" type="password" placeholder="Contraseña" {...register("password", { required: true })} />
                         <label htmlFor="password">Ingrese la contraseña</label>
                     </div>
                     <p>{errors.password?.message}</p>

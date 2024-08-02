@@ -13,6 +13,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { ProtectedRoute } from "./routes";
 import { ConfigProvider } from "./context/ConfigContext";
 import EditarScreen from "./screens/edit/EditarScreen";
+import UsersScreen from "./screens/users/UsersScreen";
 function App() {
   const { theme, toggleTheme } = useContext(ThemeContext);
 
@@ -36,6 +37,7 @@ function App() {
               <Route element={<ProtectedRoute />}>
                 {/* <Route path="/dashboard" element={<Dashboard />} /> */}
                 <Route path="/dispositivos" element={<ConfigScreen />} />
+                <Route path="/usuarios" element={<UsersScreen />} />
                 <Route path="/editar/:id" element={<EditarScreen />} />
                 <Route path="*" element={<PageNotFound />} />
               </Route>

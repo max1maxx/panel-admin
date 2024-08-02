@@ -5,6 +5,7 @@ import Pagination from 'react-bootstrap/Pagination';
 import Form from 'react-bootstrap/Form';
 import { FaEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { TfiReload } from "react-icons/tfi";
 
 const TABLE_HEADS = [
     "Cédula/RUC",
@@ -109,8 +110,11 @@ const Config = () => {
                                         <td>{dataItem.puertoPON}</td>
                                         <td className="dt-cell-action">
                                             {/* <AreaTableAction id={dataItem._id} /> */}
-                                            <Link to={`/editar/${dataItem._id}`}>
+                                            <Link className="p-2" title="Editar" to={`/editar/${dataItem._id}`}>
                                                 <FaEdit size={20}/>
+                                            </Link>
+                                            <Link className="p-2" title="Resetear dispositivo">
+                                                <TfiReload size={20}/>
                                             </Link>
                                         </td>
                                     </tr>

@@ -10,16 +10,7 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 const EditarScreen = () => {
     const { id } = useParams();
     const { obtenerDatosConfigurados, dataConfig } = useConfig();
-    // const [entidad, setEntidad] = useState();
-
-    // useEffect(() => {
-    //     console.log(obtenerDatosConfigurados)
-    //     obtenerDatosConfigurados({id}).then((response) => {
-    //         alert(response)
-    //         setEntidad(response.data);
-    //     });
-    // }, [id]);
-
+   
     useEffect(() => {
         obtenerDatosConfigurados({ id });
     }, [id]);
