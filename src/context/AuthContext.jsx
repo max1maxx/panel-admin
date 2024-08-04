@@ -69,9 +69,9 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
-    const getUserByIdenti = async (identi) => {
+    const getUserByIdenti = async (cedulaRUC) => {
         try {
-            const res = await getUserByIdentiRequest(identi);
+            const res = await getUserByIdentiRequest(cedulaRUC);
             setUser(res.data)
             // return res.data;
         } catch (error) {

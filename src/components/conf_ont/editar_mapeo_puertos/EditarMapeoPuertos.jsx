@@ -30,7 +30,7 @@ const EditarMapeoPuertos = ({dato}) => {
         if (dato && dato.puertos) {
             setPuertos(dato.puertos);
         }
-    });
+    }, [dato]);
 
     const onSubmit = handleSubmit((data) => {
         const newPuertos = [...puertos, {

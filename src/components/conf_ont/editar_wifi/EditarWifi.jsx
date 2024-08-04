@@ -25,7 +25,7 @@ const EditarWifi = ({dato}) => {
             setValue("wifiName", dato.wifi.ssid);
             setValue("wifiPassword", dato.wifi.password);
         }
-    });
+    }, [dato]);
 
     const onSubmit = handleSubmit((data) => {
         const formattedData = {

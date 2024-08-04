@@ -39,10 +39,10 @@ const Login = () => {
                         ))}
                     </div>
                     <div className="form-floating">
-                        <input type="identi" className="form-control" name="identi" placeholder="Ingrese su identificación" {...register("identi", { required: true })} />
-                        <label htmlFor="identi">Ingrese su identificación</label>
+                        <input type="cedulaRUC" className="form-control" name="cedulaRUC" placeholder="Ingrese su identificación" {...register("cedulaRUC", { required: true })} />
+                        <label htmlFor="cedulaRUC">Ingrese su identificación</label>
                     </div>
-                    <p>{errors.identi?.message}</p>
+                    <p>{errors.cedulaRUC?.message}</p>
                     <div className="form-floating">
                         <input id="password" className="form-control" type="password" placeholder="Contraseña" {...register("password", { required: true })} />
                         <label htmlFor="password">Ingrese la contraseña</label>

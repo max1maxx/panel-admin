@@ -38,7 +38,7 @@ const UsersScreen = () => {
     const filteredConfigs = users.filter(user =>
         user._id.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.names.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.identi.toLowerCase().includes(searchTerm.toLowerCase())
+        user.cedulaRUC.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const pageCount = Math.ceil(filteredConfigs.length / itemsPerPage);
@@ -115,7 +115,7 @@ const UsersScreen = () => {
                         <tbody>
                             {currentTableData.map((dataItem) => (
                                 <tr key={dataItem._id}>
-                                    <td>{dataItem.identi}</td>
+                                    <td>{dataItem.cedulaRUC}</td>
                                     <td>{dataItem.names}</td>
                                     <td><Form.Check
                                         type="checkbox"
@@ -167,7 +167,7 @@ const UsersScreen = () => {
                             <Form.Control
                                 type="text"
                                 placeholder="Ingrese la identidad: cédula, pasaporte, etc..."
-                                {...register("identi", { required: true, pattern: {
+                                {...register("cedulaRUC", { required: true, pattern: {
                                     value: /^[0-9]*$/,
                                     message: "Solo se permiten números."
                                 } })}
@@ -176,7 +176,7 @@ const UsersScreen = () => {
                                 }}
                             />
                             {/* Mostrar error de campo si existe */}
-                            <p className="text-danger">{errors.identi?.message}</p>
+                            <p className="text-danger">{errors.cedulaRUC?.message}</p>
                         </Form.Group>
 
                         <Form.Group controlId="formNames" className="p-2">

@@ -26,7 +26,7 @@ const EditarLan = ({dato}) => {
             setValue("ipMax", dato.lan.ipMax);
             setValue("dns", dato.lan.dns);
         }
-    });
+    },[dato]);
 
     const onSubmit = handleSubmit((data) => {
         const formattedData = {
