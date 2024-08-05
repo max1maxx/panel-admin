@@ -1,23 +1,24 @@
-import { createContext, useState, useContext } from 'react'
-import { registerRequest, loginRequest, verifyTokenRequest, getAllUsersRequest, getUserByIdentiRequest } from '../api/auth'
+import { createContext, useState, useContext, useEffect } from 'react';
+import { registerRequest, loginRequest, verifyTokenRequest, getAllUsersRequest, getUserByIdentiRequest, updateUserRequest, deleteUserRequest } from '../api/auth';
 import Cookies from "js-cookie";
-import { useEffect } from "react";
+
 export const AuthContext = createContext();
+
 export const useAuth = () => {
-    const context = useContext(AuthContext)
+    const context = useContext(AuthContext);
     if (!context) {
-        throw new Error('useAuth must be used within ab AuthProvider');
+        throw new Error('useAuth must be used within an AuthProvider');
     }
     return context;
-}
+};
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState(null);
     const [users, setUsers] = useState([]);
-    const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [errors, setErrors] = useState([]);
 
-    // clear errors after 5 seconds
+    // Clear errors after 5 seconds
     useEffect(() => {
         if (errors.length > 0) {
             const timer = setTimeout(() => {
@@ -29,29 +30,37 @@ export const AuthProvider = ({ children }) => {
 
     const signup = async (user) => {
         try {
-            const res = await registerRequest(user)
+            const res = await registerRequest(user);
             if (res.status === 200) {
-                setUser(res.data)
-                setIsAuthenticated(true)
+                return { success: true, message: 'Usuario creado exitosamente' };
             }
-        } catch (error) {
-            setErrors(error.response.data.messsage)
+        } catch (err) {
+            let errorMessages = [];
+    
+            if (Array.isArray(err.response.data.message)) {
+                errorMessages = err.response.data.message;
+            } else {
+                errorMessages = [err.response.data.message];
+            }
+    
+            setErrors(errorMessages);
+            return { success: false, message: errorMessages.join(', ') };
         }
-    }
+    };
 
     const singin = async (user) => {
         try {
-            const res = await loginRequest(user)
-            Cookies;
-            setUser(res.data)
-            setIsAuthenticated(true)
+            const res = await loginRequest(user);
+            Cookies.set('token', res.data.token);
+            setUser(res.data);
+            setIsAuthenticated(true);
         } catch (err) {
-            if (Array.isArray(err.response.data.messsage)) {
-                return setErrors(err.response.data.messsage)
+            if (Array.isArray(err.response.data.message)) {
+                return setErrors(err.response.data.message);
             }
-            setErrors([err.response.data.message])
+            setErrors([err.response.data.message]);
         }
-    }
+    };
 
     const logout = () => {
         Cookies.remove("token");
@@ -62,29 +71,68 @@ export const AuthProvider = ({ children }) => {
     const getAllUsers = async () => {
         try {
             const res = await getAllUsersRequest();
-            setUsers(res.data)
-            // return res.data;
+            setUsers(res.data);
         } catch (error) {
             setErrors([error.response.data.message]);
         }
-    }
+    };
 
     const getUserByIdenti = async (cedulaRUC) => {
         try {
             const res = await getUserByIdentiRequest(cedulaRUC);
-            setUser(res.data)
-            // return res.data;
+            setUser(res.data);
         } catch (error) {
             setErrors([error.response.data.message]);
         }
-    }
+    };
+
+    const updateUser = async (user) => {
+        try {
+            const res = await updateUserRequest(user);
+            if (res.status === 200) {
+                await getAllUsers(); // Refresh the user list
+                return { success: true, message: 'Usuario actualizado exitosamente' };
+            }
+        } catch (err) {
+            let errorMessages = [];
+    
+            if (Array.isArray(err.response.data.message)) {
+                errorMessages = err.response.data.message;
+            } else {
+                errorMessages = [err.response.data.message];
+            }
+    
+            setErrors(errorMessages);
+            return { success: false, message: errorMessages.join(', ') };
+        }
+    };
+
+    const deleteUser = async (identidad) => {
+        try {
+            const res = await deleteUserRequest(identidad);
+            if (res.status === 200) {
+                await getAllUsers(); // Refresh the user list
+                return { success: true, message: 'Usuario eliminado exitosamente' };
+            }
+        } catch (err) {
+            let errorMessages = [];
+    
+            if (Array.isArray(err.response.data.message)) {
+                errorMessages = err.response.data.message;
+            } else {
+                errorMessages = [err.response.data.message];
+            }
+            
+            setErrors(errorMessages);
+            return { success: false, message: errorMessages.join(', ') };
+        }
+    };
 
     useEffect(() => {
         const checkLogin = async () => {
             const cookies = Cookies.get();
             if (!cookies.token) {
                 setIsAuthenticated(false);
-                // setLoading(false);
                 return;
             }
 
@@ -93,20 +141,16 @@ export const AuthProvider = ({ children }) => {
                 if (!res.data) return setIsAuthenticated(false);
                 setIsAuthenticated(true);
                 setUser(res.data);
-                // setLoading(false);
             } catch (error) {
-                // console.log(error);
                 setIsAuthenticated(false);
-                // setLoading(false);
             }
         };
         checkLogin();
     }, []);
 
     return (
-        <AuthContext.Provider value={{ signup, singin, logout, getAllUsers, getUserByIdenti, user, users, isAuthenticated, errors }}>
+        <AuthContext.Provider value={{ signup, singin, logout, getAllUsers, getUserByIdenti, updateUser, deleteUser, user, users, isAuthenticated, errors }}>
             {children}
         </AuthContext.Provider>
-    )
+    );
 };
-

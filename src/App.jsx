@@ -3,8 +3,6 @@ import "./App.scss";
 import { ThemeContext } from "./context/ThemeContext";
 import { DARK_THEME, LIGHT_THEME } from "./constants/themeConstants";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import MoonIcon from "./assets/icons/moon.svg";
-import SunIcon from "./assets/icons/sun.svg";
 import BaseLayout from "./layout/BaseLayout";
 import { Dashboard, PageNotFound } from "./screens";
 import Login from "./screens/login/LoginScreen";

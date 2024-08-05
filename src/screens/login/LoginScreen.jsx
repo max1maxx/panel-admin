@@ -32,9 +32,9 @@ const Login = () => {
                     {/* <img className="mb-4" src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width={72} height={57} /> */}
                     <h1 className="h3 mb-3 fw-normal text-center">Bienvenido</h1>
                     <div className="bg-danger">
-                        {signinErrors.map((errors, i) => (
+                        {signinErrors.map((errores, i) => (
                             <div className="text-white" key={i}>
-                                {errors}
+                                {errores}
                             </div>
                         ))}
                     </div>
@@ -42,12 +42,12 @@ const Login = () => {
                         <input type="cedulaRUC" className="form-control" name="cedulaRUC" placeholder="Ingrese su identificación" {...register("cedulaRUC", { required: true })} />
                         <label htmlFor="cedulaRUC">Ingrese su identificación</label>
                     </div>
-                    <p>{errors.cedulaRUC?.message}</p>
+                    <p className="text-danger">{errors.cedulaRUC?.message}</p>
                     <div className="form-floating">
                         <input id="password" className="form-control" type="password" placeholder="Contraseña" {...register("password", { required: true })} />
                         <label htmlFor="password">Ingrese la contraseña</label>
                     </div>
-                    <p>{errors.password?.message}</p>
+                    <p className="text-danger">{errors.password?.message}</p>
                     <button type="submit" className="btn btn-primary w-100 py-2"> Iniciar sesión </button>
                 </form>
             </div>
