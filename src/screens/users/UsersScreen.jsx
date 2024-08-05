@@ -96,6 +96,7 @@ const UsersScreen = () => {
                         timer: 1500
                     });
                     handleModalClose();
+                    getAllUsers(); // Refrescar la lista de usuarios
                 }
             } else {
                 // Crear usuario
@@ -108,6 +109,7 @@ const UsersScreen = () => {
                         timer: 1500
                     });
                     handleModalClose();
+                    getAllUsers(); // Refrescar la lista de usuarios
                 }
             }
         } catch (error) {

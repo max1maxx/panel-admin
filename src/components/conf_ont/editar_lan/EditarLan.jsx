@@ -6,16 +6,13 @@ import { useConfig } from '../../../context/ConfigContext';
 import Swal from "sweetalert2";
 import { FaSave } from "react-icons/fa";
 
-const EditarLan = ({dato}) => {
+const EditarLan = ({ dato }) => {
     const { id } = useParams();
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
     const { cambiarLan } = useConfig();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // obtenerDatosConfigurados({ id }).then(() => {
-        //     setLoading(false);
-        // });
         setLoading(false);
     }, [id]);
 
@@ -25,8 +22,9 @@ const EditarLan = ({dato}) => {
             setValue("ipMin", dato.lan.ipMin);
             setValue("ipMax", dato.lan.ipMax);
             setValue("dns", dato.lan.dns);
+            setValue("ipLAN", dato.lan.ipLAN);  // Nuevo campo ipLAN
         }
-    },[dato]);
+    }, [dato]);
 
     const onSubmit = handleSubmit((data) => {
         const formattedData = {
@@ -35,10 +33,11 @@ const EditarLan = ({dato}) => {
                 mascara: data.mascara,
                 ipMin: data.ipMin,
                 ipMax: data.ipMax,
-                dns: data.dns
+                dns: data.dns,
+                ipLAN: data.ipLAN  // Nuevo campo ipLAN
             }
         };
-        console.log(formattedData);
+        // console.log(formattedData);
 
         Swal.fire({
             title: 'Cargando...',
@@ -99,6 +98,23 @@ const EditarLan = ({dato}) => {
                                 {errors.mascara && errors.mascara.type === "pattern" && <p className="text-danger">{errors.mascara.message}</p>}
                             </Form.Group>
 
+                            <Form.Group className="mb-3" controlId="formIpLAN">
+                                <Form.Label>IP LAN</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Ingrese la IP LAN"
+                                    {...register("ipLAN", {
+                                        required: true,
+                                        pattern: {
+                                            value: /^(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])$/,
+                                            message: "Ingrese una IP LAN válida."
+                                        }
+                                    })}
+                                />
+                                {errors.ipLAN && errors.ipLAN.type === "required" && <p className="text-danger">La IP LAN es obligatoria.</p>}
+                                {errors.ipLAN && errors.ipLAN.type === "pattern" && <p className="text-danger">{errors.ipLAN.message}</p>}
+                            </Form.Group>
+
                             <Form.Group className="mb-3" controlId="formIpMin">
                                 <Form.Label>IP Mínima</Form.Label>
                                 <Form.Control
@@ -133,7 +149,6 @@ const EditarLan = ({dato}) => {
                                 {errors.ipMax && errors.ipMax.type === "pattern" && <p className="text-danger">{errors.ipMax.message}</p>}
                             </Form.Group>
 
-
                             <Form.Group className="mb-3" controlId="formDns">
                                 <Form.Label>DNS</Form.Label>
                                 <Form.Control
@@ -151,9 +166,8 @@ const EditarLan = ({dato}) => {
                                 {errors.dns && errors.dns.type === "pattern" && <p className="text-danger">{errors.dns.message}</p>}
                             </Form.Group>
 
-
                             <Button variant="primary" type="submit">
-                            <FaSave size={20}/> Guardar cambios
+                                <FaSave size={20} /> Guardar cambios
                             </Button>
                         </form>
                     </div>

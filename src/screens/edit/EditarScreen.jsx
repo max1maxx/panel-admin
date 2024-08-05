@@ -5,16 +5,17 @@ import { useEffect, useState } from "react";
 import EditarLan from "../../components/conf_ont/editar_lan/EditarLan";
 import EditarMapeoPuertos from "../../components/conf_ont/editar_mapeo_puertos/EditarMapeoPuertos";
 import { IoMdArrowRoundBack } from "react-icons/io";
-
+import { useAuth } from "../../context/AuthContext";
 
 const EditarScreen = () => {
     const { id } = useParams();
     const { obtenerDatosConfigurados, dataConfig } = useConfig();
-   
+    const { user } = useAuth();
+
     useEffect(() => {
         obtenerDatosConfigurados({ id });
     }, [id]);
-    
+
     return (
         <div>
             <div className="container">
@@ -40,9 +41,9 @@ const EditarScreen = () => {
                             <div className="col-12 p-2">
                                 <EditarWifi dato={dataConfig} deviceId={id} />
                             </div>
-                            <div className="col-12 p-2">
+                            {user?.isAdmin && (<div className="col-12 p-2">
                                 <EditarLan dato={dataConfig} />
-                            </div>
+                            </div>)}
                             <div className="col-12 p-2">
                                 <EditarMapeoPuertos dato={dataConfig} />
                             </div>

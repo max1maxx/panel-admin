@@ -14,9 +14,6 @@ const EditarWifi = ({dato}) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {        
-        // obtenerDatosConfigurados({id}).then(() => {
-        //     setLoading(false);
-        // });
         setLoading(false);
     }, [id]);
 
@@ -24,6 +21,7 @@ const EditarWifi = ({dato}) => {
         if (dato && dato.wifi) {
             setValue("wifiName", dato.wifi.ssid);
             setValue("wifiPassword", dato.wifi.password);
+            setValue("wifiEnable", dato.wifi.enabled);
         }
     }, [dato]);
 
@@ -32,7 +30,8 @@ const EditarWifi = ({dato}) => {
             id,
             wifi: {
                 ssid: data.wifiName,
-                password: data.wifiPassword
+                password: data.wifiPassword,
+                enabled: data.wifiEnable
             }
         };
         Swal.fire({
@@ -97,8 +96,16 @@ const EditarWifi = ({dato}) => {
                                 {errors.wifiPassword && <p className="text-danger">La contraseña de WiFi es obligatoria.</p>}
                             </Form.Group>
 
+                            <Form.Group className="mb-3" controlId="formWifiEnable">
+                                <Form.Check
+                                    type="checkbox"
+                                    label="Habilitar WiFi"
+                                    {...register("wifiEnable")}
+                                />
+                            </Form.Group>
+
                             <Button variant="primary" type="submit">
-                            <FaSave size={20}/>  Guardar cambios
+                                <FaSave size={20}/>  Guardar cambios
                             </Button>
                         </form>
                     </div>

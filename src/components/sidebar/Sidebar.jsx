@@ -49,8 +49,8 @@ const Sidebar = () => {
               </Link>
             </li>
             {user?.isAdmin && (
-              <li className={`menu-item ${isActive('/usuarios')}`}>
-                <Link to="/usuarios" className="menu-link">
+              <li className="menu-item nav-item">
+                <Link to="/usuarios" className={`menu-link ${isActive('/usuarios')}`}>
                   <span className="menu-link-icon">
                     <MdOutlinePeople size={20} />
                   </span>
