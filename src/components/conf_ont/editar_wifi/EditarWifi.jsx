@@ -3,17 +3,18 @@ import { Form, Button } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useConfig } from '../../../context/ConfigContext';
+import { useAuth } from '../../../context/AuthContext';
 import Swal from "sweetalert2";
 import { FaSave } from "react-icons/fa";
 
-
-const EditarWifi = ({dato}) => {
+const EditarWifi = ({ dato }) => {
     const { id } = useParams();
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
     const { cambiarNombreClaveWifi } = useConfig();
     const [loading, setLoading] = useState(true);
+    const { user } = useAuth();
 
-    useEffect(() => {        
+    useEffect(() => {
         setLoading(false);
     }, [id]);
 
@@ -69,48 +70,52 @@ const EditarWifi = ({dato}) => {
 
     return (
         <div>
-            <div className="container">
-                <div className="card">
-                    <div className="card-header">
-                        <span>Editar nombre y contraseña WIFI</span>
-                    </div>
-                    <div className="card-body">
-                        <form onSubmit={onSubmit}>
-                            <Form.Group className="mb-3" controlId="formWifiName">
-                                <Form.Label>Nombre de WiFi</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Ingrese el nombre de WiFi"
-                                    {...register("wifiName", { required: true })}
-                                />
-                                {errors.wifiName && <p className="text-danger">El nombre de WiFi es obligatorio.</p>}
-                            </Form.Group>
+            {(user?.isAdmin || dato.wifi?.enabled) && (
+                <div className="container">
+                    <div className="card">
+                        <div className="card-header">
+                            <span>Editar nombre y contraseña WIFI</span>
+                        </div>
+                        <div className="card-body">
+                            <form onSubmit={onSubmit}>
+                                <Form.Group className="mb-3" controlId="formWifiName">
+                                    <Form.Label>Nombre de WiFi</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Ingrese el nombre de WiFi"
+                                        {...register("wifiName", { required: true })}
+                                    />
+                                    {errors.wifiName && <p className="text-danger">El nombre de WiFi es obligatorio.</p>}
+                                </Form.Group>
 
-                            <Form.Group className="mb-3" controlId="formWifiPassword">
-                                <Form.Label>Contraseña de WiFi</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Ingrese la contraseña de WiFi"
-                                    {...register("wifiPassword", { required: true })}
-                                />
-                                {errors.wifiPassword && <p className="text-danger">La contraseña de WiFi es obligatoria.</p>}
-                            </Form.Group>
+                                <Form.Group className="mb-3" controlId="formWifiPassword">
+                                    <Form.Label>Contraseña de WiFi</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Ingrese la contraseña de WiFi"
+                                        {...register("wifiPassword", { required: true })}
+                                    />
+                                    {errors.wifiPassword && <p className="text-danger">La contraseña de WiFi es obligatoria.</p>}
+                                </Form.Group>
 
-                            <Form.Group className="mb-3" controlId="formWifiEnable">
-                                <Form.Check
-                                    type="checkbox"
-                                    label="Habilitar WiFi"
-                                    {...register("wifiEnable")}
-                                />
-                            </Form.Group>
+                                {user?.isAdmin && (
+                                    <Form.Group className="mb-3" controlId="formWifiEnable">
+                                        <Form.Check
+                                            type="checkbox"
+                                            label="Habilitar WiFi"
+                                            {...register("wifiEnable")}
+                                        />
+                                    </Form.Group>
+                                )}
 
-                            <Button variant="primary" type="submit">
-                                <FaSave size={20}/>  Guardar cambios
-                            </Button>
-                        </form>
+                                <Button variant="primary" type="submit">
+                                    <FaSave size={20} /> Guardar cambios
+                                </Button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 };
