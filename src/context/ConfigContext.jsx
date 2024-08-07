@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { getDevicesRequest, changeWifiConfig, changeLanConfig, getConfigs, changeMapPortsConfig, getDevicesRequestById } from "../api/config";
+import { getDevicesRequest, changeWifiConfig, changeLanConfig, getConfigs, changeMapPortsConfig, getDevicesRequestById, resetDevice } from "../api/config";
 
 const ConfigContext = createContext();
 
@@ -76,7 +76,16 @@ export function ConfigProvider({ children }) {
         }
     }
 
+    const resetear = async (data) => {
+        try {
+            const res = await resetDevice(data);
+            // console.log(res);
+        } catch (error) {
+            console.error('Error al enviar los datos:', error);
+        }
+    }
+
     return (
-        <ConfigContext.Provider value={{ configs, getDevices, cambiarNombreClaveWifi, cambiarLan, obtenerDatosConfigurados, dataConfig, cambiarMapeoPuertos, listarPorId, dataById }}>{children}</ConfigContext.Provider>
+        <ConfigContext.Provider value={{ configs, getDevices, cambiarNombreClaveWifi, cambiarLan, obtenerDatosConfigurados, dataConfig, cambiarMapeoPuertos, listarPorId, dataById, resetear }}>{children}</ConfigContext.Provider>
     )
 }

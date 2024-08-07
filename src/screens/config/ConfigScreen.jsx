@@ -17,7 +17,7 @@ const TABLE_HEADS = [
 ];
 
 const Config = () => {
-    const { getDevices, configs } = useConfig();
+    const { getDevices, configs, resetear } = useConfig();
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(5);
     const [searchTerm, setSearchTerm] = useState('');
@@ -53,6 +53,10 @@ const Config = () => {
     const handleItemsPerPageChange = (e) => {
         setItemsPerPage(parseInt(e.target.value));
         setCurrentPage(1);
+    };
+
+    const handleReset = (id) => {
+        resetear(id);
     };
 
     return (
@@ -113,7 +117,7 @@ const Config = () => {
                                             <Link className="p-2" title="Editar" to={`/editar/${dataItem._id}`}>
                                                 <FaEdit size={20}/>
                                             </Link>
-                                            <Link className="p-2" title="Resetear dispositivo">
+                                            <Link className="p-2" title="Resetear dispositivo" onClick={() => handleReset(dataItem._id)}>
                                                 <TfiReload size={20}/>
                                             </Link>
                                         </td>

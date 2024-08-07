@@ -13,3 +13,4 @@ export const changeWifiConfig = (data) => axios.post('/config/cambiarWifi', data
 export const changeLanConfig = (data) => axios.post('/config/cambiarLan', data)
 export const changeMapPortsConfig = (data) => axios.post('/config/cambiarMapeoPuertos', data)
 export const getConfigs = (data) => axios.post('/config/obtenerDatosPanel', data)
+export const resetDevice = (data) => axios.post('/config/resetear', data)
