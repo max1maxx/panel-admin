@@ -79,11 +79,19 @@ export function ConfigProvider({ children }) {
     const resetear = async (data) => {
         try {
             const res = await resetDevice(data);
-            // console.log(res);
+            if (res.status === 200) {
+                await getDevices(); // Refresh list
+                return { success: true, message: 'Dispositivo reseteado' };
+            } else {
+                return { success: false, message: 'Error al resetear el dispositivo' };
+            }
         } catch (error) {
             console.error('Error al enviar los datos:', error);
+            return { success: false, message: 'Error al enviar los datos' };
         }
     }
+    
+
 
     return (
         <ConfigContext.Provider value={{ configs, getDevices, cambiarNombreClaveWifi, cambiarLan, obtenerDatosConfigurados, dataConfig, cambiarMapeoPuertos, listarPorId, dataById, resetear }}>{children}</ConfigContext.Provider>

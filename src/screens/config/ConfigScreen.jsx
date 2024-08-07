@@ -72,20 +72,29 @@ const Config = () => {
                 setLoading(true);
                 setDisabledButtons([...disabledButtons, id]);
 
-                resetear(id)
-                    .then(() => {
-                        Swal.fire(
-                            'Reseteado!',
-                            'El dispositivo ha sido reseteado exitosamente.',
-                            'success'
-                        );
+                resetear({ id })
+                    .then((result) => {
+                        if (result.success) {
+                            Swal.fire(
+                                'Reseteado!',
+                                result.message,
+                                'success'
+                            );
+                        } else {
+                            Swal.fire(
+                                'Error!',
+                                result.message,
+                                'error'
+                            );
+                        }
                     })
-                    .catch(() => {
+                    .catch((error) => {
                         Swal.fire(
                             'Error!',
-                            'Hubo un error al resetear el dispositivo.',
+                            'Hubo un error inesperado al resetear el dispositivo.',
                             'error'
                         );
+                        console.error('Error en resetear:', error);
                     })
                     .finally(() => {
                         setLoading(false);
