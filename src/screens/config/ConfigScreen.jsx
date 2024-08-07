@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 import { FaEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { TfiReload } from "react-icons/tfi";
+import Swal from "sweetalert2";
 
 const TABLE_HEADS = [
     "Cédula/RUC",
@@ -21,6 +22,8 @@ const Config = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(5);
     const [searchTerm, setSearchTerm] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [disabledButtons, setDisabledButtons] = useState([]);
 
     useEffect(() => {
         getDevices();
@@ -56,8 +59,42 @@ const Config = () => {
     };
 
     const handleReset = (id) => {
-        resetear(id);
+        Swal.fire({
+            title: 'Está seguro?',
+            text: 'Esta acción reseteará el dispositivo',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, Resetear!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                setLoading(true);
+                setDisabledButtons([...disabledButtons, id]);
+
+                resetear(id)
+                    .then(() => {
+                        Swal.fire(
+                            'Reseteado!',
+                            'El dispositivo ha sido reseteado exitosamente.',
+                            'success'
+                        );
+                    })
+                    .catch(() => {
+                        Swal.fire(
+                            'Error!',
+                            'Hubo un error al resetear el dispositivo.',
+                            'error'
+                        );
+                    })
+                    .finally(() => {
+                        setLoading(false);
+                        setDisabledButtons(disabledButtons.filter(btnId => btnId !== id));
+                    });
+            }
+        });
     };
+
 
     return (
         <>
@@ -115,10 +152,10 @@ const Config = () => {
                                         <td className="dt-cell-action">
                                             {/* <AreaTableAction id={dataItem._id} /> */}
                                             <Link className="p-2" title="Editar" to={`/editar/${dataItem._id}`}>
-                                                <FaEdit size={20}/>
+                                                <FaEdit size={20} />
                                             </Link>
                                             <Link className="p-2" title="Resetear dispositivo" onClick={() => handleReset(dataItem._id)}>
-                                                <TfiReload size={20}/>
+                                                <TfiReload size={20} />
                                             </Link>
                                         </td>
                                     </tr>
