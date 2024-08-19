@@ -102,7 +102,7 @@ const EditarLan = ({ dato }) => {
                                 <Form.Label>IP LAN</Form.Label>
                                 <Form.Control
                                     type="text"
-                                    placeholder="Ingrese la IP LAN"
+                                    placeholder="Ingrese la IP LAN/ONT"
                                     {...register("ipLAN", {
                                         required: true,
                                         pattern: {
