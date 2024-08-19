@@ -98,7 +98,7 @@ const EditarLan = ({ dato }) => {
                                 {errors.mascara && errors.mascara.type === "pattern" && <p className="text-danger">{errors.mascara.message}</p>}
                             </Form.Group>
 
-                            <Form.Group className="mb-3" controlId="formIpLAN" style={{display: 'none'}}>
+                            <Form.Group className="mb-3" controlId="formIpLAN">
                                 <Form.Label>IP LAN</Form.Label>
                                 <Form.Control
                                     type="text"
