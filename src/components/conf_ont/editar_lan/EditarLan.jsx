@@ -99,7 +99,7 @@ const EditarLan = ({ dato }) => {
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formIpLAN">
-                                <Form.Label>IP LAN</Form.Label>
+                                <Form.Label>IP LAN/ONT</Form.Label>
                                 <Form.Control
                                     type="text"
                                     placeholder="Ingrese la IP LAN/ONT"
