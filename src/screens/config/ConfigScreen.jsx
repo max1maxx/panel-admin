@@ -66,7 +66,7 @@ const Config = () => {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Si, Resetear!'
+            confirmButtonText: 'Si, Restablecer!'
         }).then((result) => {
             if (result.isConfirmed) {
                 setLoading(true);
@@ -163,7 +163,7 @@ const Config = () => {
                                             <Link className="p-2" title="Editar" to={`/editar/${dataItem._id}`}>
                                                 <FaEdit size={20} />
                                             </Link>
-                                            <Link className="p-2" title="Resetear dispositivo" onClick={() => handleReset(dataItem._id)}>
+                                            <Link className="p-2" title="Restablecer dispositivo" onClick={() => handleReset(dataItem._id)}>
                                                 <TfiReload size={20} />
                                             </Link>
                                         </td>
