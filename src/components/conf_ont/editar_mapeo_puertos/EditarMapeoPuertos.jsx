@@ -191,8 +191,8 @@ const EditarMapeoPuertos = ({dato}) => {
                 <div className="card">
                     <div className="card-header">
                         <span>Editar Mapeo de Puertos</span>
-                        <Button variant="primary" className="float-end" onClick={() => reset()}><MdOutlineAdd size={20} />
-                            Nuevo</Button>
+                        {/* <Button variant="primary" className="float-end" onClick={() => reset()}><MdOutlineAdd size={20} />
+                            Nuevo</Button> */}
                     </div>
                     <div className="card-body">
                         <form onSubmit={onSubmit}>
